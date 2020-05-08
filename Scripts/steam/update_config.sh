@@ -1,2 +1,2 @@
 #!/bin/bash
-cp -p ~/config/* ~/local/.steam/
+cp -p ~/backup/config/* ~/local/.steam/

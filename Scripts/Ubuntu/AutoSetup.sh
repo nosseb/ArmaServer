@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="0.5"
+version="0.5.1"
 
 #TODO: look for blockdevice ID in parameters
 
@@ -58,16 +58,16 @@ printf "\n\n"
 # creating .steam folder
 # not needed on reboot
 if [ ! -d /home/steam/local/.steam ]
-then
-    sudo -u steam mkdir /home/steam/local/.steam
+    then
+        sudo -u steam mkdir /home/steam/local/.steam
 fi
 sudo -u steam ln -s /home/steam/local/.steam /home/steam/.steam
 
 # creating Steam folder
 # not needed on reboot
 if [ ! -d /home/steam/local/Steam ]
-then
-    sudo -u steam mkdir /home/steam/local/Steam
+    then
+        sudo -u steam mkdir /home/steam/local/Steam
 fi
 sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
 

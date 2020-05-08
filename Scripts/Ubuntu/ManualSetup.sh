@@ -1,10 +1,10 @@
 #!/bin/bash
-version='0.2'
+version='0.2.1'
 
 if [ -z "$1" ]
-  then
-    echo "No argument supplied"
-    exit 128
+    then
+        printf "No argument supplied" >&2
+        exit 128
 fi
 
 # REQUIREMENTS
