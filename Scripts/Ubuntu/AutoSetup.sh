@@ -29,8 +29,8 @@ printf "\n\n\n\nAdding user\n===========\n"
 sudo useradd -m -s /bin/bash steam
 sudo -u steam mkdir /home/steam/local
 sudo -u steam mkdir /home/steam/backup
-printf "\n#ls -a /home/steam\n"
-ls -a /home/steam
+printf "\n#ls -lha /home/steam\n"
+ls -lha /home/steam
 
 # LOCAL INSTACE STORAGE
 printf "\n\n\n\nMounting local storage\n======================\n\n"
@@ -72,7 +72,7 @@ fi
 sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
 # creating arma3 folder
 # not needed on reboot
-if [ ! -d /home/steam/local/Steam ]
+if [ ! -d /home/steam/local/arma3 ]
     then
         sudo -u steam mkdir /home/steam/local/arma3
 fi
