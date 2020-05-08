@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="0.5.2"
+version="0.6"
 
 #TODO: look for blockdevice ID in parameters
 
@@ -33,6 +33,7 @@ sudo -u steam mkdir /home/steam/backup
 printf "\n#ls -lha /home/steam\n"
 ls -lha /home/steam
 
+
 # LOCAL INSTACE STORAGE
 printf "\n\n\n\nMounting local storage\n======================\n\n"
 printf "#sudo nvme list\n"
@@ -57,27 +58,17 @@ printf "\n\n#lsblk\n"
 lsblk
 printf "\n\n"
 
-# creating .steam folder
-# not needed on reboot
-if [ ! -d /home/steam/local/.steam ]
+function make_steam_folder () {
+    if [ ! -d /home/steam/local/$1 ]
     then
-        sudo -u steam mkdir /home/steam/local/.steam
-fi
-sudo -u steam ln -s /home/steam/local/.steam /home/steam/.steam
-# creating Steam folder
-# not needed on reboot
-if [ ! -d /home/steam/local/Steam ]
-    then
-        sudo -u steam mkdir /home/steam/local/Steam
-fi
-sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
-# creating arma3 folder
-# not needed on reboot
-if [ ! -d /home/steam/local/arma3 ]
-    then
-        sudo -u steam mkdir /home/steam/local/arma3
-fi
-sudo -u steam ln -s /home/steam/local/arma3 /home/steam/arma3
+        sudo -u steam mkdir /home/steam/local/$1
+    fi
+    sudo -u steam ln -s /home/steam/local/$1 /home/steam/$1
+}
+
+make_steam_folder .steam
+make_steam_folder Steam
+make_steam_folder arma3
 
 printf "\n\n#ls -lha /home/steam/\n"
 ls -lha /home/steam/
@@ -92,17 +83,22 @@ chmod +x /home/ubuntu/ManualSetup.sh
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
-printf "\n\nDownload user scripts\n\n"
-sudo -u steam mkdir /home/steam/scripts
-sudo -u steam git --git-dir=/home/steam/scripts init
-sudo -u steam git --git-dir=/home/steam/scripts remote add origin -f https://github.com/nosseb/ArmaServer.git
-sudo -u steam echo "Scripts/steam" > /home/steam/scripts/.git/info/sparse-checkout
-sudo -u steam git --git-dir=/home/steam/scripts git pull origin master
-printf "\n\nAdd execution rights\n"
-sudo -u steam chmod +x /home/steam/scripts/*.sh
-printf "\n#ls -lha /home/steam/scripts\n"
-ls -lha /home/steam/scripts
-printf "\nMove scripts\n"
+# Download user scripts
+printf "\n Download user scripts\n"
+function download_script () {
+    sudo -u steam curl https://github.com/nosseb/ArmaServer/blob/master/Scripts/steam/$1 --output /home/steam/$1
+    sudo -u steam chmod +x /home/steam/$1
+}
+
+download_script backup_steam.sh
+download_script restore_steam.sh
+download_script start_arma.sh
+download_script stop_arma.sh
+download_script update_arma.sh
+download_script update_config.sh
+
+printf "#ls -lha /home/steam\n"
+ls -lha /home/steam/
 
 #TODO: check if blockdevice avalible
 #TODO: If block device availble, mount it
