@@ -24,9 +24,14 @@ ebsArma=$(sudo nvme list | grep $1 | cut -d " " -f1) # path to ebs storage
 printf "\n\n#ebsArma : $ebsArma\n\n"
 printf "mount\n"
 sudo mount $ebsArma /home/steam/backup # mount
+printf "\n\n#lsblk\n"
+lsblk
 printf "\nChange owner\n"
 sudo chown steam:steam /home/steam/backup # change owner
 
+
 # links
-printf "\nCreate Link\n"
+printf "\n\nCreate Link\n"
 sudo -u steam ln -s /home/steam/backup/config /home/steam/config
+printf "#ls -lha /home/steam\n"
+ls -lha /home/steam/

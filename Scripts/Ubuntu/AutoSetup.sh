@@ -53,9 +53,11 @@ sudo mkfs.ext4 $InstancePart # format partition
 
 # mount
 sudo mount $InstancePart /home/steam/local # mount partition
-sudo chown -R steam:steam /home/steam/local # change owner
 printf "\n\n#lsblk\n"
 lsblk
+sudo chown -R steam:steam /home/steam/local # change owner
+printf "#ls -lha /home/steam\n"
+ls -lha /home/steam/
 printf "\n\n"
 
 function make_steam_folder () {
