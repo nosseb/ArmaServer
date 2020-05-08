@@ -18,7 +18,7 @@ sudo add-apt-repository -y ppa:sbates # Repository for nvme-cli
 sudo add-apt-repository -y multiverse # Repository for SteamCMD
 sudo dpkg --add-architecture i386
 sudo apt-get update
-sudo apt-get install nvme-cli make # for scripting purposes
+sudo apt-get install nvme-cli # for scripting purposes
 sudo apt-get -y install lib32gcc1 # SteamCMD requirement
 
 

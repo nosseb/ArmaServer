@@ -15,4 +15,3 @@ sudo chown steam:steam /home/steam/backup # change owner
 
 # links
 sudo -u steam ln -s /home/steam/backup/config /home/steam/config
-sudo -u steam ln -s /home/steam/backup/Makefile.mk /home/steam/Makefile.mk
