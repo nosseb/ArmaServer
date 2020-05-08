@@ -11,7 +11,7 @@ fi
 printf "\n\n\nInstalling requirements\n=======================\n\n"
 sudo apt-get install steamcmd
 printf "\n\nPath export\n===========\n"
-export PATH=/usr/games:$PATH
+echo "export PATH=\$PATH:/usr/games" | sudo tee -a /home/steam/.bashrc
 
 
 # EBS PERSISTENT STORAGE
