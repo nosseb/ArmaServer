@@ -88,7 +88,7 @@ ls -lha /home/ubuntu/
 # Download user scripts
 printf "\n Download user scripts\n"
 function download_script () {
-    sudo -u steam curl https://github.com/nosseb/ArmaServer/blob/master/Scripts/steam/$1 --output /home/steam/$1
+    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/steam/$1 --output /home/steam/$1
     sudo -u steam chmod +x /home/steam/$1
 }
 
