@@ -1,5 +1,5 @@
 #!/bin/bash
-version="0.3"
+version="0.4"
 
 
 # ENABLE LOGGING
@@ -65,7 +65,7 @@ sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
 
 # DOWNLOAD ADDITIONAL SCRIPTS
 
-curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/ubuntu/ManualSetup.sh --output /home/ubuntu/ManualSetup.sh
+curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/ManualSetup.sh --output /home/ubuntu/ManualSetup.sh
 chmod +x /home/ubuntu/ManualSetup.sh
 
 
