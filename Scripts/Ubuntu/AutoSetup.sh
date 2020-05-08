@@ -94,10 +94,10 @@ ls -lha /home/ubuntu/
 
 printf "\n\nDownload user scripts\n\n"
 sudo -u steam mkdir /home/steam/scripts
-sudo -u steam (cd /home/steam/scripts; git init)
-sudo -u steam (cd /home/steam/scripts; git remote add origin -f https://github.com/nosseb/ArmaServer.git)
-sudo -u steam (cd /home/steam/scripts; exho "Scripts/steam" > .git/info/sparse-checkout)
-sudo -u steam (cd /home/steam/scripts; git pull origin master)
+sudo -u steam git --git-dir=/home/steam/scripts init
+sudo -u steam git --git-dir=/home/steam/scripts remote add origin -f https://github.com/nosseb/ArmaServer.git
+sudo -u steam echo "Scripts/steam" > /home/steam/scripts/.git/info/sparse-checkout
+sudo -u steam git --git-dir=/home/steam/scripts git pull origin master
 printf "\n\nAdd execution rights\n"
 sudo -u steam chmod +x /home/steam/scripts/*.sh
 printf "\n#ls -lha /home/steam/scripts\n"
