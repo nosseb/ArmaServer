@@ -1,2 +1,2 @@
 #!/bin/bash
-cp -p ~/backup/config/* ~/local/.steam/
+cp -p ~/backup/config/* ~/local/arma3/
