@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="0.5.1"
+version="0.5.2"
 
 #TODO: look for blockdevice ID in parameters
 
@@ -25,14 +25,15 @@ sudo apt-get -y install lib32gcc1 # SteamCMD requirement
 
 
 # USER CREATION
-printf "\n\n\n\nAdding user\n"
+printf "\n\n\n\nAdding user\n===========\n"
 sudo useradd -m -s /bin/bash steam
 sudo -u steam mkdir /home/steam/local
 sudo -u steam mkdir /home/steam/backup
+printf "\n#ls -a /home/steam\n"
 ls -a /home/steam
 
 # LOCAL INSTACE STORAGE
-printf "\n\n\n\nMounting local storage\n\n"
+printf "\n\n\n\nMounting local storage\n======================\n\n"
 printf "#sudo nvme list\n"
 sudo nvme list
 printf "\n\n"
@@ -62,7 +63,6 @@ if [ ! -d /home/steam/local/.steam ]
         sudo -u steam mkdir /home/steam/local/.steam
 fi
 sudo -u steam ln -s /home/steam/local/.steam /home/steam/.steam
-
 # creating Steam folder
 # not needed on reboot
 if [ ! -d /home/steam/local/Steam ]
@@ -70,18 +70,25 @@ if [ ! -d /home/steam/local/Steam ]
         sudo -u steam mkdir /home/steam/local/Steam
 fi
 sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
+# creating arma3 folder
+# not needed on reboot
+if [ ! -d /home/steam/local/Steam ]
+    then
+        sudo -u steam mkdir /home/steam/local/arma3
+fi
+sudo -u steam ln -s /home/steam/local/arma3 /home/steam/arma3
 
-printf "\n\n#ls -lha /home/steam/ \n"
+printf "\n\n#ls -lha /home/steam/\n"
 ls -lha /home/steam/
 printf "\n\n#ls -lha /home/steam/local/\n"
 ls -lha /home/steam/local/
 
 
 # DOWNLOAD ADDITIONAL SCRIPTS
-printf "\n\n\n\nDownloading additional files\n\n"
+printf "\n\n\n\nDownloading additional files\n============================\n\n"
 curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/ManualSetup.sh --output /home/ubuntu/ManualSetup.sh
 chmod +x /home/ubuntu/ManualSetup.sh
-printf "#ls -lha /home/ubuntu"
+printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
 
@@ -91,5 +98,4 @@ ls -lha /home/ubuntu/
 
 # QUIT AND DESABLE LOGGING
 
-return
 exit 0
