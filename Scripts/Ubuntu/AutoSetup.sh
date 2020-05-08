@@ -7,7 +7,7 @@ version="0.2"
 exec 3>&1 4>&2 # Saves file descriptors
 trap 'exec 2>&4 1>&3' 0 1 2 3 RETURN # Restore file descriptors.
 # The RETURN pseudo sigspec restore file descriptors each time a shell function or a script executed with the . or source builtins finishes executing.
-exec 1>/home/Ubuntu/log.out 2>&1
+exec 1>/home/ubuntu/log.out 2>&1
 
 echo "AutoSetup.sh version" $version
 
@@ -65,8 +65,8 @@ sudo -u steam ln -s /home/steam/local/Steam /home/steam/Steam
 
 # DOWNLOAD ADDITIONAL SCRIPTS
 
-curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/ManualSetup.sh --output /home/Ubuntu/ManualSetup.sh
-chmod +x /home/Ubuntu/ManualSetup.sh
+curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/ubuntu/ManualSetup.sh --output /home/ubuntu/ManualSetup.sh
+chmod +x /home/ubuntu/ManualSetup.sh
 
 
 # QUIT AND DESABLE LOGGING
