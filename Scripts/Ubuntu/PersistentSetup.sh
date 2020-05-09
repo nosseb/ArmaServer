@@ -1,5 +1,5 @@
 #!/bin/bash
-local version='1.0'
+version='1.0'
 
 if [ -z "$1" ]
     then
@@ -7,7 +7,7 @@ if [ -z "$1" ]
         exit 128
 fi
 
-local ebs=""
+ebs=""
 if [[ $1 == "vol-"* ]]
     then
         ebs=${1//vol-/}
@@ -15,12 +15,12 @@ if [[ $1 == "vol-"* ]]
         ebs=$1
 fi
 
-local ebsArma=$(sudo nvme list | grep $ebs | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
+ebsArma=$(sudo nvme list | grep $ebs | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
 printf "\n\n#ebsArma : $ebsArma\n\n"
 if [ $ebsArma ]
     then
         printf "\n\nPersistent storage detected\n\n"
-        local mounted=$(lsblk | grep $ebsArma | tr -s ' ' | cut -d" " -f7) # path of mounted dirrectory
+        mounted=$(lsblk | grep $ebsArma | tr -s ' ' | cut -d" " -f7) # path of mounted dirrectory
         if [ $mounted ]
             then
                 printf "\n\nPersistent storage already mounted.\n\n"

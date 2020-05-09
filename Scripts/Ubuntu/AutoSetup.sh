@@ -1,6 +1,5 @@
 #!/bin/bash
-local version="1.0"
-local p1=$1
+version="1.0"
 
 #TODO: look for blockdevice ID in parameters
 
@@ -39,9 +38,9 @@ printf "\n\n\n\nMounting local storage\n======================\n\n"
 printf "#sudo nvme list\n"
 sudo nvme list
 printf "\n\n"
-local InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
-local End="p1"
-local InstancePart=$InstanceDevice$End # path to local storage partition
+InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
+End="p1"
+InstancePart=$InstanceDevice$End # path to local storage partition
 printf "\n\nInstance partition: $InstancePart\n\n"
 
 # create partition

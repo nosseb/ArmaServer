@@ -1,5 +1,5 @@
 #!/bin/bash
-local version='1.0'
+version='1.0'
 
 if [ -z "$1" ]
     then
