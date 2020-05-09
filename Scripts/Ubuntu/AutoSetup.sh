@@ -48,6 +48,8 @@ sudo sfdisk $InstanceDevice << EOF
 ;
 EOF
 
+sleep 5s
+
 sudo mkfs.ext4 $InstancePart # format partition
 
 # mount
