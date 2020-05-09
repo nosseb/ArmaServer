@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="0.6"
+version="1.0"
 
 #TODO: look for blockdevice ID in parameters
 
@@ -80,30 +80,33 @@ ls -lha /home/steam/local/
 
 # DOWNLOAD ADDITIONAL SCRIPTS
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
-curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/ManualSetup.sh --output /home/ubuntu/ManualSetup.sh
-chmod +x /home/ubuntu/ManualSetup.sh
+function download_admin_script () {
+    curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
+    chmod +x /home/ubuntu/$1
+}
+
+download_admin_script ManualSetup.sh
+download_admin_script PersistentSetup.sh
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
 # Download user scripts
 printf "\n Download user scripts\n"
-function download_script () {
+function download_user_script () {
     sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/steam/$1 --output /home/steam/$1
     sudo -u steam chmod +x /home/steam/$1
 }
 
-download_script backup_steam.sh
-download_script restore_steam.sh
-download_script start_arma.sh
-download_script stop_arma.sh
-download_script update_arma.sh
-download_script update_config.sh
-
+download_user_script backup_steam.sh
+download_user_script restore_steam.sh
+download_user_script start_arma.sh
+download_user_script stop_arma.sh
+download_user_script update_arma.sh
+download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
-#TODO: check if blockdevice avalible
-#TODO: If block device availble, mount it
+source /home/ubuntu/PersistentSetup.sh $1
 
 
 # QUIT AND DESABLE LOGGING
