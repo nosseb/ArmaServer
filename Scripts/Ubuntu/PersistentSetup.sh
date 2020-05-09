@@ -7,8 +7,14 @@ if [ -z "$1" ]
         exit 128
 fi
 
+if [[ $1 == "vol-"* ]]
+    then
+        ebs=${1//vol-/}
+    else
+        ebs=$1
+fi
 
-ebsArma=$(sudo nvme list | grep $1 | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
+ebsArma=$(sudo nvme list | grep $ebs | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
 printf "\n\n#ebsArma : $ebsArma\n\n"
 if [ $ebsArma ]
     then
