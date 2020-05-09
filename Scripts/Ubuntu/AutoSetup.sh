@@ -81,7 +81,8 @@ ls -lha /home/steam/local/
 # DOWNLOAD ADDITIONAL SCRIPTS
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
 function download_admin_script () {
-    curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
+    #TODO: change dev url
+    curl https://raw.githubusercontent.com/nosseb/ArmaServer/Pat/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
     chmod +x /home/ubuntu/$1
 }
 
@@ -93,7 +94,8 @@ ls -lha /home/ubuntu/
 # Download user scripts
 printf "\n Download user scripts\n"
 function download_user_script () {
-    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/steam/$1 --output /home/steam/$1
+    #TODO: change dev url
+    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/Pat/Scripts/steam/$1 --output /home/steam/$1
     sudo -u steam chmod +x /home/steam/$1
 }
 
@@ -105,6 +107,9 @@ download_user_script update_arma.sh
 download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
+
+cp /home/ubuntu/password.txt /home/steam/password.txt
+sudo chown steam:steam /home/steam/password.txt
 
 source /home/ubuntu/PersistentSetup.sh $1
 
