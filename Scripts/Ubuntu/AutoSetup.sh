@@ -82,7 +82,7 @@ ls -lha /home/steam/local/
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
 function download_admin_script () {
     #TODO: currect url
-    curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
+    curl https://raw.githubusercontent.com/nosseb/ArmaServer/Ubik/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
     chmod +x /home/ubuntu/$1
 }
 
@@ -95,7 +95,7 @@ ls -lha /home/ubuntu/
 printf "\n Download user scripts\n"
 function download_user_script () {
     # TODO: correct url
-    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/steam/$1 --output /home/steam/$1
+    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/Ubik/Scripts/steam/$1 --output /home/steam/$1
     sudo -u steam chmod +x /home/steam/$1
 }
 

@@ -3,7 +3,8 @@
 version="1.4"
 
 # Download initial script
-curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/AutoSetup.sh --output /home/ubuntu/AutoSetup.sh
+# TODO: correct url
+curl https://raw.githubusercontent.com/nosseb/ArmaServer/Ubik/Scripts/Ubuntu/AutoSetup.sh --output /home/ubuntu/AutoSetup.sh
 chmod +x /home/ubuntu/AutoSetup.sh # add execution rights
 
 # Run
