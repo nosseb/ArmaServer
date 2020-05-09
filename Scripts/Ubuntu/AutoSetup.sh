@@ -108,7 +108,7 @@ download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
-source /home/ubuntu/PersistentSetup.sh
+source /home/ubuntu/PersistentSetup.sh $1
 
 
 # QUIT AND DESABLE LOGGING

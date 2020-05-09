@@ -10,7 +10,7 @@ fi
 
 ebsArma=$(sudo nvme list | grep $1 | cut -d " " -f1) # path to ebs storage
 printf "\n\n#ebsArma : $ebsArma\n\n"
-if [ $ebsArma]
+if [ $ebsArma ]
     then
         printf "\n\nPersistent storage detected\n\n"
         mounted=$(lsblk | grep $ebsArma | tr -s ' ' | cut -d" " -f7) # path of mounted dirrectory
