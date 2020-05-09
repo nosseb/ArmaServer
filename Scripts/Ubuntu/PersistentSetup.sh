@@ -8,7 +8,7 @@ if [ -z "$1" ]
 fi
 
 
-ebsArma=$(sudo nvme list | grep $1 | cut -d " " -f1) # path to ebs storage
+ebsArma=$(sudo nvme list | grep $1 | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
 printf "\n\n#ebsArma : $ebsArma\n\n"
 if [ $ebsArma ]
     then
@@ -20,7 +20,7 @@ if [ $ebsArma ]
             else
                 printf "\n\nPersistent storage not mounted.\n\n"
                 printf "mount\n"
-                sudo mount $ebsArma /home/steam/backup # mount
+                sudo mount /dev/$ebsArma /home/steam/backup # mount
                 printf "\n\n#lsblk\n"
                 lsblk
                 printf "\nChange owner\n"
