@@ -1,6 +1,6 @@
 #!/bin/bash
-
-version="1.0"
+local version="1.0"
+local p1=$1
 
 #TODO: look for blockdevice ID in parameters
 
@@ -39,9 +39,9 @@ printf "\n\n\n\nMounting local storage\n======================\n\n"
 printf "#sudo nvme list\n"
 sudo nvme list
 printf "\n\n"
-InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
-End="p1"
-InstancePart=$InstanceDevice$End # path to local storage partition
+local InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
+local End="p1"
+local InstancePart=$InstanceDevice$End # path to local storage partition
 printf "\n\nInstance partition: $InstancePart\n\n"
 
 # create partition
@@ -106,7 +106,7 @@ download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
-source /home/ubuntu/PersistentSetup.sh $1
+source /home/ubuntu/PersistentSetup.sh $p1
 
 
 # QUIT AND DESABLE LOGGING
