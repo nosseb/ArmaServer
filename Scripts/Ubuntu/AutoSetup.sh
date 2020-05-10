@@ -1,5 +1,7 @@
 #!/bin/bash
-version="1.0"
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
+version=2.0
 
 #TODO: look for blockdevice ID in parameters
 

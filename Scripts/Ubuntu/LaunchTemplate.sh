@@ -1,5 +1,8 @@
 #!/bin/bash
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
 version="2.0"
+
 cat > /home/ubuntu/password.txt << EOM
 server_name myServerName
 server_password myServerPassword

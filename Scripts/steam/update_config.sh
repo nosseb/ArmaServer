@@ -1,4 +1,7 @@
 #!/bin/bash
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
+version=2.0
 
 cp -p ~/backup/config/*.cfg ~/local/arma3/
 
