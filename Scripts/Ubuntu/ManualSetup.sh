@@ -26,7 +26,8 @@ echo "export PATH=\$PATH:/usr/games" | sudo tee -a /home/steam/.bashrc
 printf "\n\nMounting persistent storage\n===========================\n\n"
 printf "#sudo nvme list\n"
 sudo nvme list
-source /home/ubuntu/PersistentSetup.sh $1
+# shellcheck disable=SC1091
+source /home/ubuntu/PersistentSetup.sh "$1"
 
 
 # links
