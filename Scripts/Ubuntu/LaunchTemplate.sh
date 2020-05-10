@@ -8,7 +8,7 @@ command_password myCommandPassword
 EOM
 chown ubuntu:ubuntu /home/ubuntu/password.txt
 #TODO: change dev url
-curl https://raw.githubusercontent.com/nosseb/ArmaServer/Pat/Scripts/Ubuntu/AutoSetup.sh --output /home/ubuntu/AutoSetup.sh
+curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/AutoSetup.sh --output /home/ubuntu/AutoSetup.sh
 chmod +x /home/ubuntu/AutoSetup.sh
 sudo bash /home/ubuntu/AutoSetup.sh Volume-ID
 touch /home/ubuntu/.setup_complete
