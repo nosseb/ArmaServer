@@ -1,7 +1,7 @@
 #!/bin/bash
 version="2.0"
 cat > /home/ubuntu/password.txt << EOM
-Server_name myServerName
+server_name myServerName
 server_password myServerPassword
 admin_password myAdminPassword
 command_password myCommandPassword
