@@ -5,7 +5,7 @@ cp -p ~/backup/config/*.cfg ~/local/arma3/
 if [ -f ~/password.txt ]
 then
     config=~/config.txt
-    ls ~/backup/config/*.cfg > $config
+    ls ~/local/arma3/*.cfg > $config
     while IFS= read -r file
     do
         passwords=~/password.txt
