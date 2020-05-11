@@ -17,19 +17,19 @@ printf "AutoSetup.sh version %s\n" $version
 
 # REQUIREMENTS
 printf "\n\n\n\nInstalling requirements\n=======================\n\n"
-sudo add-apt-repository -y ppa:sbates # Repository for nvme-cli
-sudo add-apt-repository -y multiverse # Repository for SteamCMD
-sudo dpkg --add-architecture i386
-sudo apt-get update
-sudo apt-get install nvme-cli # for scripting purposes
-sudo apt-get install zip dos2unix git #misc
-sudo apt-get -y install lib32gcc1 # SteamCMD requirement
+sudo add-apt-repository -y ppa:sbates > /dev/null # Repository for nvme-cli
+sudo add-apt-repository -y multiverse > /dev/null # Repository for SteamCMD
+sudo dpkg --add-architecture i386 > /dev/null
+sudo apt-get update > /dev/null
+sudo apt-get install nvme-cli > /dev/null # for scripting purposes
+sudo apt-get install zip dos2unix git > /dev/null #misc
+sudo apt-get -y install lib32gcc1 > /dev/null # SteamCMD requirement
 
 
 # USER CREATION
 printf "\n\n\n\nAdding user\n===========\n"
 sudo useradd -m -s /bin/bash steam
-sudo -u steam mkdir /home/steam/local
+sudo -u steam mkdir /home/steam/loca
 sudo -u steam mkdir /home/steam/backup
 printf "\n#ls -lha /home/steam\n"
 ls -lha /home/steam
@@ -42,9 +42,9 @@ function download_admin_script () {
     chmod +x /home/ubuntu/"$1"
 }
 
-download_admin_script ManualSetup.sh
-download_admin_script MountPersistent.sh
-download_admin_script MountLocal.sh
+download_admin_script ManualSetup.sh > /dev/null
+download_admin_script MountPersistent.sh > /dev/null
+download_admin_script MountLocal.sh > /dev/null
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
@@ -60,18 +60,18 @@ function download_user_script () {
     sudo -u steam chmod +x /home/steam/"$1"
 }
 
-download_user_script backup_steam.sh
-download_user_script restore_steam.sh
-download_user_script start_arma.sh
-download_user_script stop_arma.sh
-download_user_script update_arma.sh
-download_user_script update_config.sh
+download_user_script backup_steam.sh > /dev/null
+download_user_script restore_steam.sh > /dev/null
+download_user_script start_arma.sh > /dev/null
+download_user_script stop_arma.sh > /dev/null
+download_user_script update_arma.sh > /dev/null
+download_user_script update_config.sh > /dev/null
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
 # GET PASSWORDS
-cp /home/ubuntu/password.txt /home/steam/password.txt
-sudo chown steam:steam /home/steam/password.txt
+cp /home/ubuntu/password.txt /home/steam/password.txt 
+sudo chown steam:steam /home/steam/password.txt 
 
 # MOUNT PERSISTENT STORAGE
 # shellcheck disable=SC1091
