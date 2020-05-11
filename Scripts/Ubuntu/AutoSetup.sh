@@ -26,7 +26,7 @@ sudo apt-get -y install lib32gcc1 > /dev/null # SteamCMD requirement
 # USER CREATION
 printf "\n\n\n\nAdding user\n===========\n"
 sudo useradd -m -s /bin/bash steam
-sudo -u steam mkdir /home/steam/loca
+sudo -u steam mkdir /home/steam/local
 sudo -u steam mkdir /home/steam/backup
 printf "\n#ls -lha /home/steam\n"
 ls -lha /home/steam
