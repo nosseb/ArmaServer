@@ -3,15 +3,16 @@
 # https://github.com/nosseb/Ehwaz
 version=2.0
 
-# LOCAL INSTACE STORAGE
-printf "\n\n\n\nMounting local storage\n======================\n\n"
-printf "#sudo nvme list\n"
-sudo nvme list
-printf "\n\n"
-InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
+
+# Load path to local storage
+InstanceDevice=$(sudo nvme list | grep Instance | cut -d" " -f1) # path to local storage device
 End="p1"
 InstancePart=$InstanceDevice$End # path to local storage partition
-printf "\n\nInstance partition: %s\n\n" "$InstancePart"
+if [ -z "$InstanceDevice" ]
+then
+    printf "\nDid not find instance storage\n" 1>&2
+    exit 1
+fi
 
 # create partition
 sudo sfdisk "$InstanceDevice" << EOF
