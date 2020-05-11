@@ -1,4 +1,7 @@
 #!/bin/bash
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
+version=2.0
 
 # Make a list of config files to ignore
 ls ~/config/ > ~/.config.txt

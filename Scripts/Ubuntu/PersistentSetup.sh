@@ -1,5 +1,7 @@
 #!/bin/bash
-version='1.0'
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
+version=2.0
 
 if [ -z "$1" ]
     then
@@ -7,6 +9,7 @@ if [ -z "$1" ]
         exit 128
 fi
 
+ebs=""
 if [[ $1 == "vol-"* ]]
     then
         ebs=${1//vol-/}
@@ -14,19 +17,19 @@ if [[ $1 == "vol-"* ]]
         ebs=$1
 fi
 
-ebsArma=$(sudo nvme list | grep $ebs | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
-printf "\n\n#ebsArma : $ebsArma\n\n"
-if [ $ebsArma ]
+ebsArma=$(sudo nvme list | grep "$ebs" | cut -d" " -f1 | cut -d"/" -f3) # path to ebs storage
+printf "\n\n#ebsArma : %S\n\n" "$ebsArma"
+if [ "$ebsArma" ]
     then
         printf "\n\nPersistent storage detected\n\n"
-        mounted=$(lsblk | grep $ebsArma | tr -s ' ' | cut -d" " -f7) # path of mounted dirrectory
-        if [ $mounted ]
+        mounted=$(lsblk | grep "$ebsArma" | tr -s ' ' | cut -d" " -f7) # path of mounted dirrectory
+        if [ "$mounted" ]
             then
                 printf "\n\nPersistent storage already mounted.\n\n"
             else
                 printf "\n\nPersistent storage not mounted.\n\n"
                 printf "mount\n"
-                sudo mount /dev/$ebsArma /home/steam/backup # mount
+                sudo mount /dev/"$ebsArma" /home/steam/backup # mount
                 printf "\n\n#lsblk\n"
                 lsblk
                 printf "\nChange owner\n"

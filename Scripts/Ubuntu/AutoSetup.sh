@@ -1,6 +1,7 @@
 #!/bin/bash
-
-version="1.0"
+# Provided under MIT Licence
+# https://github.com/nosseb/Ehwaz
+version=2.0
 
 #TODO: look for blockdevice ID in parameters
 
@@ -11,7 +12,7 @@ trap 'exec 2>&4 1>&3' 0 1 2 3 RETURN # Restore file descriptors.
 # The RETURN pseudo sigspec restore file descriptors each time a shell function or a script executed with the . or source builtins finishes executing.
 exec 1>/home/ubuntu/log.out 2>&1
 
-printf "AutoSetup.sh version $version\n"
+printf "AutoSetup.sh version %s\n" $version
 
 
 # REQUIREMENTS
@@ -42,17 +43,19 @@ printf "\n\n"
 InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
 End="p1"
 InstancePart=$InstanceDevice$End # path to local storage partition
-printf "\n\nInstance partition: $InstancePart\n\n"
+printf "\n\nInstance partition: %s\n\n" "$InstancePart"
 
 # create partition
-sudo sfdisk $InstanceDevice << EOF
+sudo sfdisk "$InstanceDevice" << EOF
 ;
 EOF
 
-sudo mkfs.ext4 $InstancePart # format partition
+sleep 5s
+
+sudo mkfs.ext4 "$InstancePart" # format partition
 
 # mount
-sudo mount $InstancePart /home/steam/local # mount partition
+sudo mount "$InstancePart" /home/steam/local # mount partition
 printf "\n\n#lsblk\n"
 lsblk
 sudo chown -R steam:steam /home/steam/local # change owner
@@ -61,11 +64,11 @@ ls -lha /home/steam/
 printf "\n\n"
 
 function make_steam_folder () {
-    if [ ! -d /home/steam/local/$1 ]
+    if [ ! -d /home/steam/local/"$1" ]
     then
-        sudo -u steam mkdir /home/steam/local/$1
+        sudo -u steam mkdir /home/steam/local/"$1"
     fi
-    sudo -u steam ln -s /home/steam/local/$1 /home/steam/$1
+    sudo -u steam ln -s /home/steam/local/"$1" /home/steam/"$1"
 }
 
 make_steam_folder .steam
@@ -81,8 +84,9 @@ ls -lha /home/steam/local/
 # DOWNLOAD ADDITIONAL SCRIPTS
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
 function download_admin_script () {
-    curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/Ubuntu/$1 --output /home/ubuntu/$1
-    chmod +x /home/ubuntu/$1
+    #TODO: change dev url
+    curl https://raw.githubusercontent.com/nosseb/Ehwaz/master/Scripts/Ubuntu/"$1" --output /home/ubuntu/"$1"
+    chmod +x /home/ubuntu/"$1"
 }
 
 download_admin_script ManualSetup.sh
@@ -93,8 +97,9 @@ ls -lha /home/ubuntu/
 # Download user scripts
 printf "\n Download user scripts\n"
 function download_user_script () {
-    sudo -u steam curl https://raw.githubusercontent.com/nosseb/ArmaServer/master/Scripts/steam/$1 --output /home/steam/$1
-    sudo -u steam chmod +x /home/steam/$1
+    #TODO: change dev url
+    sudo -u steam curl https://raw.githubusercontent.com/nosseb/Ehwaz/master/Scripts/steam/"$1" --output /home/steam/"$1"
+    sudo -u steam chmod +x /home/steam/"$1"
 }
 
 download_user_script backup_steam.sh
@@ -106,7 +111,11 @@ download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
-source /home/ubuntu/PersistentSetup.sh $1
+cp /home/ubuntu/password.txt /home/steam/password.txt
+sudo chown steam:steam /home/steam/password.txt
+
+# shellcheck disable=SC1091
+source /home/ubuntu/PersistentSetup.sh "$1"
 
 
 # QUIT AND DESABLE LOGGING
