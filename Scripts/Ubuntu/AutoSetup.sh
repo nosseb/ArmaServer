@@ -44,6 +44,7 @@ function download_admin_script () {
 
 download_admin_script ManualSetup.sh
 download_admin_script MountPersistent.sh
+download_admin_script MountLocal.sh
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
