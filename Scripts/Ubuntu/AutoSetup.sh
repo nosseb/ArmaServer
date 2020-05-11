@@ -34,54 +34,7 @@ sudo -u steam mkdir /home/steam/backup
 printf "\n#ls -lha /home/steam\n"
 ls -lha /home/steam
 
-
-# LOCAL INSTACE STORAGE
-printf "\n\n\n\nMounting local storage\n======================\n\n"
-printf "#sudo nvme list\n"
-sudo nvme list
-printf "\n\n"
-InstanceDevice=$(sudo nvme list | grep Instance | cut -d " " -f1) # path to local storage device
-End="p1"
-InstancePart=$InstanceDevice$End # path to local storage partition
-printf "\n\nInstance partition: %s\n\n" "$InstancePart"
-
-# create partition
-sudo sfdisk "$InstanceDevice" << EOF
-;
-EOF
-
-sleep 5s
-
-sudo mkfs.ext4 "$InstancePart" # format partition
-
-# mount
-sudo mount "$InstancePart" /home/steam/local # mount partition
-printf "\n\n#lsblk\n"
-lsblk
-sudo chown -R steam:steam /home/steam/local # change owner
-printf "#ls -lha /home/steam\n"
-ls -lha /home/steam/
-printf "\n\n"
-
-function make_steam_folder () {
-    if [ ! -d /home/steam/local/"$1" ]
-    then
-        sudo -u steam mkdir /home/steam/local/"$1"
-    fi
-    sudo -u steam ln -s /home/steam/local/"$1" /home/steam/"$1"
-}
-
-make_steam_folder .steam
-make_steam_folder Steam
-make_steam_folder arma3
-
-printf "\n\n#ls -lha /home/steam/\n"
-ls -lha /home/steam/
-printf "\n\n#ls -lha /home/steam/local/\n"
-ls -lha /home/steam/local/
-
-
-# DOWNLOAD ADDITIONAL SCRIPTS
+# DOWNLOAD SETUP SCRIPTS
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
 function download_admin_script () {
     #TODO: change dev url
@@ -94,7 +47,11 @@ download_admin_script MountPersistent.sh
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
-# Download user scripts
+# MOUNT LOCAL STORAGE
+# shellcheck disable=SC1091
+source /home/ubuntu/MountLocal.sh
+
+# DOWNLOAD USER SCRIPTS
 printf "\n Download user scripts\n"
 function download_user_script () {
     #TODO: change dev url
@@ -111,13 +68,14 @@ download_user_script update_config.sh
 printf "#ls -lha /home/steam\n"
 ls -lha /home/steam/
 
+# GET PASSWORDS
 cp /home/ubuntu/password.txt /home/steam/password.txt
 sudo chown steam:steam /home/steam/password.txt
 
+# MOUNT PERSISTENT STORAGE
 # shellcheck disable=SC1091
 source /home/ubuntu/MountPersistent.sh "$1"
 
 
 # QUIT AND DESABLE LOGGING
-
 exit 0
