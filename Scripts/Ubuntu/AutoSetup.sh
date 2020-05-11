@@ -17,12 +17,9 @@ printf "AutoSetup.sh version %s\n" $version
 
 # REQUIREMENTS
 printf "\n\n\n\nInstalling requirements\n=======================\n\n"
-sudo add-apt-repository -y ppa:sbates > /dev/null # Repository for nvme-cli
-sudo add-apt-repository -y multiverse > /dev/null # Repository for SteamCMD
-sudo dpkg --add-architecture i386 > /dev/null
 sudo apt-get update > /dev/null
-sudo apt-get install nvme-cli > /dev/null # for scripting purposes
-sudo apt-get install zip dos2unix git > /dev/null #misc
+sudo apt-get -y install nvme-cli > /dev/null # for scripting purposes
+sudo apt-get -y install zip dos2unix git > /dev/null #misc
 sudo apt-get -y install lib32gcc1 > /dev/null # SteamCMD requirement
 
 
