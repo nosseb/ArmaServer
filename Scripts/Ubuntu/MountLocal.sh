@@ -14,10 +14,14 @@ then
     exit 1
 fi
 
+function create_partition () {
 # create partition
 sudo sfdisk "$InstanceDevice" << EOF
 ;
 EOF
+}
+
+create_partition > /dev/null
 
 sleep 5s
 
