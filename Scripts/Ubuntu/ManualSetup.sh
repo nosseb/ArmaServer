@@ -27,7 +27,7 @@ printf "\n\nMounting persistent storage\n===========================\n\n"
 printf "#sudo nvme list\n"
 sudo nvme list
 # shellcheck disable=SC1091
-source /home/ubuntu/PersistentSetup.sh "$1"
+source /home/ubuntu/MountPersistent.sh "$1"
 
 
 # links

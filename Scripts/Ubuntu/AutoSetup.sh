@@ -90,7 +90,7 @@ function download_admin_script () {
 }
 
 download_admin_script ManualSetup.sh
-download_admin_script PersistentSetup.sh
+download_admin_script MountPersistent.sh
 printf "#ls -lha /home/ubuntu\n"
 ls -lha /home/ubuntu/
 
@@ -115,7 +115,7 @@ cp /home/ubuntu/password.txt /home/steam/password.txt
 sudo chown steam:steam /home/steam/password.txt
 
 # shellcheck disable=SC1091
-source /home/ubuntu/PersistentSetup.sh "$1"
+source /home/ubuntu/MountPersistent.sh "$1"
 
 
 # QUIT AND DESABLE LOGGING
