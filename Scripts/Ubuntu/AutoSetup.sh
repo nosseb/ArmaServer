@@ -85,7 +85,7 @@ ls -lha /home/steam/local/
 printf "\n\n\n\nDownloading additional files\n============================\n\n"
 function download_admin_script () {
     #TODO: change dev url
-    curl https://raw.githubusercontent.com/nosseb/Ehwaz/master/Scripts/Ubuntu/"$1" --output /home/ubuntu/"$1"
+    curl https://raw.githubusercontent.com/nosseb/Ehwaz/Ubik/Scripts/Ubuntu/"$1" --output /home/ubuntu/"$1"
     chmod +x /home/ubuntu/"$1"
 }
 
@@ -98,7 +98,7 @@ ls -lha /home/ubuntu/
 printf "\n Download user scripts\n"
 function download_user_script () {
     #TODO: change dev url
-    sudo -u steam curl https://raw.githubusercontent.com/nosseb/Ehwaz/master/Scripts/steam/"$1" --output /home/steam/"$1"
+    sudo -u steam curl https://raw.githubusercontent.com/nosseb/Ehwaz/Ubik/Scripts/steam/"$1" --output /home/steam/"$1"
     sudo -u steam chmod +x /home/steam/"$1"
 }
 
