@@ -4,51 +4,110 @@
 version=2.0
 
 
-# Load path to local storage
-InstanceDevice=$(sudo nvme list | grep Instance | cut -d" " -f1) # path to local storage device
-End="p1"
-InstancePart=$InstanceDevice$End # path to local storage partition
-if [ -z "$InstanceDevice" ]
+
+
+# TEST IF STORAGE EXIST
+PathToInstanceStorage=$(sudo nvme list | grep Instance | cut -d" " -f1)
+printf "Detected Instance Storage :  "
+if [ ! "$PathToInstanceStorage" ]
 then
-    printf "\nDid not find instance storage\n" 1>&2
-    exit 1
+	printf "FAIL\n"
+	#TODO: wait and retry
+	printf "E: Failed to detect Instance Storage" 1>&2
+	exit 1
+else
+	printf "OK\n"
 fi
 
-function create_partition () {
-# create partition
-sudo sfdisk "$InstanceDevice" << EOF
-;
-EOF
+
+# TEST IF PARTITION EXIST
+PathToInstancePartition="$PathToInstanceStorage""p1"
+function update_InstancePartitionExists () {
+	InstancePartitionExists=$(ls /dev/"$PathToInstancePartition")
 }
+printf "Instance partition exist :  "
+update_InstancePartitionExists
+if [ ! "$InstancePartitionExists" ]
+then
+	printf "FAIL\n"
+	function create_partition () {
+	sudo sfdisk "$PathToInstanceStorage" <<- EOF
+	;
+	EOF
+	}
+	create_partition > /dev/null
+else
+	printf "OK\n"
+fi
 
-create_partition > /dev/null
 
-sleep 5s
+# TEST IF PARTITION FORMATED
+function update_InstancePartitionFormat () {
+	InstancePartitionFormat=$(df -Th | grep "$PathToInstanceStorage" | tr -s ' ' | cut -d" " -f2)
+}
+printf "Instance partition formated :  "
+update_InstancePartitionFormat
+if [ "$InstancePartitionFormat" != "ext4" ]
+then
+	printf "FAIL\n"
+	sudo mkfs.ext4 "$PathToInstancePartition" > /dev/null
+else
+	printf "OK\n"
+fi
 
-sudo mkfs.ext4 "$InstancePart" # format partition
 
-# mount
-sudo mount "$InstancePart" /home/steam/local # mount partition
-printf "\n\n#lsblk\n"
-lsblk
-sudo chown -R steam:steam /home/steam/local # change owner
-printf "#ls -lha /home/steam\n"
-ls -lha /home/steam/
-printf "\n\n"
+# TEST IF PARTITION MOUNTED
+InstancePartitionName=$("$PathToInstanceStorage" | cut -d"/" -f3)
+function update_InstancePartitionMountPoint () {
+	InstancePartitionMountPoint=$(lsblk | grep "$InstancePartitionName" | tr -s ' ' | cut -d" " -f7)
+}
+printf "Instance partition mounted :  "
+update_InstancePartitionMountPoint
+if [ ! "$InstancePartitionMountPoint" ]
+then
+	printf "FAIL\n"
+	mount "$PathToInstancePartition" /home/steam/local
+elif [ "$InstancePartitionMountPoint" != "/home/steam/local" ]
+then
+	printf "FAIL\n"
+	#TODO: umount and mount partition
+else
+	printf "OK\n"
+fi
+
+
+# TEST OWNER OF MOUNT DIRECTORY
+function update_MountPointOwner () {
+	MountPointOwner=$(stat -c '%U:%G' /home/steam/local)
+}
+update_MountPointOwner
+printf "Owner of instance partition mount point is valid :  "
+if [ "$MountPointOwner" != "steam:steam" ]
+then
+	printf "FAIL\n"
+	chown -R steam:steam /home/steam/local
+else
+	printf "OK\n"
+fi
+
+# TEST IF SUBFOLDER PRESENT
+function update_ValidSubfolders () {
+	#TODO:
+}
+update_ValidSubfolders
+printf ""
+
+
+
 
 function make_steam_folder () {
-    if [ ! -d /home/steam/local/"$1" ]
-    then
-        sudo -u steam mkdir /home/steam/local/"$1"
-    fi
-    sudo -u steam ln -s /home/steam/local/"$1" /home/steam/"$1"
+	if [ ! -d /home/steam/local/"$1" ]
+	then
+		sudo -u steam mkdir /home/steam/local/"$1"
+	fi
+	sudo -u steam ln -s /home/steam/local/"$1" /home/steam/"$1"
 }
 
 make_steam_folder .steam
 make_steam_folder Steam
 make_steam_folder arma3
-
-printf "\n\n#ls -lha /home/steam/\n"
-ls -lha /home/steam/
-printf "\n\n#ls -lha /home/steam/local/\n"
-ls -lha /home/steam/local/
